@@ -1,0 +1,11 @@
+{
+    "name": "test_task",
+    "command": "g++",
+    "args": [
+        "-g",
+        "hello.cpp",
+        "-o",
+        "hello.out",
+        "-std=c++23"
+    ]
+}
