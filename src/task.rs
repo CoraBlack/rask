@@ -11,7 +11,6 @@ pub struct TaskJson {
     name: String,
     command: String,
     args: Option<Vec<String>>,
-    // cwd: Option<PathBuf>,
 }
 
 impl TaskJson {
@@ -23,8 +22,8 @@ impl TaskJson {
 
     pub fn run(&self) -> anyhow::Result<()> {
         let mut cmd = std::process::Command::new(&self.command);
-        if self.args.is_some() {
-            cmd.args(self.args.as_ref().unwrap());
+        if let Some(args) = self.args.as_ref() {
+            cmd.args(args);
         }
 
         let exec_status = cmd.status()?;
