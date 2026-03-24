@@ -1,6 +1,7 @@
-use std::path::PathBuf;
+use std::{path::PathBuf};
 
 mod task;
+mod utils;
 
 fn get_arg() -> Option<String> {
     let args: Vec<String> = std::env::args().collect();
@@ -13,13 +14,16 @@ fn get_arg() -> Option<String> {
 
 fn main() {
     let Some(task_path) = get_arg() else {
-        panic!("Failed to get task file path!");
+        utils::error_and_exit("Task file is invivid".to_string())
     };
 
     let task_path = PathBuf::from(task_path);
 
-    let task = task::TaskJson::new(task_path)
-        .expect("Failed to create task from file!");
+    let Ok(task) = task::TaskJson::new(task_path) else {
+        utils::error_and_exit("Failed to create task".to_string())
+    };
 
-    task.run().expect("Failed to run task!");
+    if let Err(e) = task.run() {
+        utils::error_and_exit(format!("{}", e).to_string())
+    };
 }

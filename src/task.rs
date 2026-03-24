@@ -11,6 +11,7 @@ pub struct TaskJson {
     name: String,
     command: String,
     args: Option<Vec<String>>,
+    cwd: Option<String>
 }
 
 impl TaskJson {
